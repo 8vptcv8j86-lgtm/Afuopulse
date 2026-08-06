@@ -1,0 +1,16 @@
+services:
+  mongo:
+    image: mongo:7
+    ports: ["27017:27017"]
+    volumes: ["afuopulse_mongo:/data/db"]
+  backend:
+    build: ./backend
+    environment:
+      MONGO_URL: mongodb://mongo:27017
+      DB_NAME: afuopulse
+      JWT_SECRET: local-dev-secret
+      APP_ENV: development
+    ports: ["8001:8001"]
+    depends_on: [mongo]
+volumes:
+  afuopulse_mongo:
